@@ -37,6 +37,7 @@ License: BSD and GPLv2 and GPLv2+
 URL: https://github.com/sailfishos/quota
 Source0: %{name}-%{version}.tar.gz
 Source1: quota_nld.service
+Source2: 01-start-before-services.conf
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -116,6 +117,9 @@ install -p -m644 -D %{SOURCE1} %{buildroot}/%{_unitdir}/quota_nld.service
 install -p -d %{buildroot}/%{_unitdir}/multi-user.target.wants/
 ln -s ../quota_nld.service %{buildroot}/%{_unitdir}/multi-user.target.wants/
 
+mkdir -p %{buildroot}/%{_unitdir}/quota@home.service.d
+install -p -m644 -D %{SOURCE2} %{buildroot}/%{_unitdir}/quota@home.service.d/
+
 mkdir -p %{buildroot}/%{_docdir}/%{name}-%{version}
 install -m644 -t %{buildroot}/%{_docdir}/%{name}-%{version} Changelog doc/*
 
@@ -148,6 +152,7 @@ install -m644 -t %{buildroot}/%{_docdir}/%{name}-%{version} Changelog doc/*
 %{_sbindir}/quotacheck
 %{_sbindir}/quotaon
 %{_sbindir}/quotaoff
+%{_unitdir}/quota@home.service.d/01-start-before-services.conf
 
 %files nld
 %license COPYING
